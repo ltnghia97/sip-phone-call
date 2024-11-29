@@ -576,8 +576,8 @@ class SipCallService implements SipUaHelperListener {
     }
 
     if (((voipToken.isNotEmpty || _fcmToken.isNotEmpty) && (initializedCompleter?.isCompleted ?? false)) || registerWithoutConnectCallCenter) {
-      var url = _socketUri.replace(pathSegments: [_socketUri.path, ApiPath.register]);
-
+      // var url = _socketUri.replace(pathSegments: [_socketUri.path, ApiPath.register]);
+      var url = _socketUri.replace(path: '${_socketUri.path}${ApiPath.register}');
       /// Await the http get response, then decode the json-formatted response.
       String body = jsonEncode({
         'id': _deviceId,
@@ -645,7 +645,8 @@ class SipCallService implements SipUaHelperListener {
 
   Future<void> unregister() async {
     if (_authToken.isNotEmpty) {
-      var url = _socketUri.replace(pathSegments: [_socketUri.path, ApiPath.unregister]);
+      // var url = _socketUri.replace(pathSegments: [_socketUri.path, ApiPath.unregister]);
+      var url = _socketUri.replace(path: '${_socketUri.path}${ApiPath.unregister}');
       try {
         await http.post(url, headers: {
           HttpHeaders.authorizationHeader: "Bearer $_authToken",
@@ -863,7 +864,8 @@ class SipCallService implements SipUaHelperListener {
   }
 
   void informNewOutboundCall({required String phoneNumber, String? leadId, String? phoneContactId, String? salesId, required String salesExtension, required Function onCallSuccess, required Function(String) onCallError}) async {
-    var url = _socketUri.replace(pathSegments: [_socketUri.path, ApiPath.informNewOutbound]);
+    // var url = _socketUri.replace(pathSegments: [_socketUri.path, ApiPath.informNewOutbound]);
+    var url = _socketUri.replace(path: '${_socketUri.path}${ApiPath.informNewOutbound}');
     Map<String, String> body = {
       'phone_number': phoneNumber,
       'sales_extension': salesExtension,
